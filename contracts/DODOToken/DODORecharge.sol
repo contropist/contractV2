@@ -13,16 +13,16 @@ contract DODORecharge is InitializableOwnable {
     IERC20 immutable _DODO_;
     address immutable _DODO_APPROVE_PROXY_;
 
-    event RechargeDODO(address user,uint256 _amount);
+    event DeductionDODO(address user,uint256 _amount);
     
     constructor(address dodoAddress,address dodoApproveProxy)public {
         _DODO_ = IERC20(dodoAddress);
         _DODO_APPROVE_PROXY_ = dodoApproveProxy;
     }
 
-    function rechargeDODO(uint256 amount) external{
+    function deductionDODO(uint256 amount) external{
         IDODOApproveProxy(_DODO_APPROVE_PROXY_).claimTokens(_DODO_, msg.sender, address(this), amount);
-        emit RechargeDODO(msg.sender, amount);
+        emit DeductionDODO(msg.sender, amount);
     }
     // ============ Owner Functions ============
     function claimToken(address token) public onlyOwner {
